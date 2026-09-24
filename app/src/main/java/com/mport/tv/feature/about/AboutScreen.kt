@@ -35,8 +35,8 @@ fun AboutScreen(
         Spacer(Modifier.height(16.dp))
         Text(
             "Clean-room Android IPTV / media player.\n" +
-                "Supports M3U/M3U8, HLS, DASH, MP4 via Media3.
-YouTube InnerTube + nsigsolver/potokennp2 assets (WebView).\n" +
+                "Supports M3U/M3U8, HLS, DASH, MP4 via Media3.\n" +
+                "YouTube InnerTube + nsigsolver/potokennp2 assets (WebView).\n" +
                 "Favorites, history, search, EPG (XMLTV), secure update primitives.",
             style = MaterialTheme.typography.bodyMedium
         )

@@ -1,13 +1,37 @@
 package com.mport.tv.data.settings
+
 import android.content.Context
-import androidx.datastore.preferences.core.*
+import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import androidx.datastore.preferences.core.edit
-private val Context.settingsDataStore by preferencesDataStore("mport_tv_settings")
-class AppSettings(private val context:Context){
- private val dark=booleanPreferencesKey("dark_mode"); private val playlist=stringPreferencesKey("playlist_url")
- val darkMode:Flow<Boolean> = context.settingsDataStore.data.map{it[dark]?:true}; val playlistUrl:Flow<String?>=context.settingsDataStore.data.map{it[playlist]}
- suspend fun setDarkMode(v:Boolean)=context.settingsDataStore.edit{it[dark]=v}; suspend fun setPlaylistUrl(v:String)=context.settingsDataStore.edit{it[playlist]=v}
+
+private val Context.settingsDataStore by preferencesDataStore(name = "mport_tv_settings")
+
+class AppSettings(private val context: Context) {
+
+    private val darkKey = booleanPreferencesKey("dark_mode")
+    private val playlistKey = stringPreferencesKey("playlist_url")
+
+    val darkMode: Flow<Boolean> = context.settingsDataStore.data.map { prefs ->
+        prefs[darkKey] ?: true
+    }
+
+    val playlistUrl: Flow<String?> = context.settingsDataStore.data.map { prefs ->
+        prefs[playlistKey]
+    }
+
+    suspend fun setDarkMode(value: Boolean) {
+        context.settingsDataStore.edit { prefs ->
+            prefs[darkKey] = value
+        }
+    }
+
+    suspend fun setPlaylistUrl(value: String) {
+        context.settingsDataStore.edit { prefs ->
+            prefs[playlistKey] = value
+        }
+    }
 }
