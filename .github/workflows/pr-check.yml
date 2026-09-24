@@ -27,7 +27,7 @@ jobs:
 
       - name: Ensure wrapper
         run: |
-          if [ ! -f ./gradlew ]; then gradle wrapper --gradle-version 8.11.1; fi
+          if [ ! -f ./gradlew ]; then gradle wrapper --gradle-version 9.6.1; fi
           chmod +x ./gradlew
 
       - name: Compile Kotlin (debug)
