@@ -17,18 +17,26 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: "17"
           cache: gradle
 
       - uses: gradle/actions/setup-gradle@v4
+        with:
+          cache-read-only: true
 
       - name: Ensure wrapper
         run: |
-          if [ ! -f ./gradlew ]; then gradle wrapper --gradle-version 9.6.1; fi
-          chmod +x ./gradlew
+          if [ -f ./gradlew ]; then
+            chmod +x ./gradlew
+          else
+            # Generate wrapper without applying android plugin evaluation issues:
+            # use system gradle only for wrapper jar
+            gradle wrapper --gradle-version 9.6.1
+            chmod +x ./gradlew
+          fi
 
       - name: Compile Kotlin (debug)
         run: ./gradlew compileDebugKotlin --stacktrace --no-daemon

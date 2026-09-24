@@ -1,38 +1,23 @@
-# AGP / Gradle migration notes
+# AGP 9 migration fixes
 
-## Error from CI log (fixed)
+## Error (CI log)
 
 ```
-Plugin [id: 'com.google.devtools.ksp', version: '2.1.20-2.0.32'] was not found
+The option 'android.defaults.buildfeatures.buildconfig' is deprecated.
+It was removed in version 9.0 of the Android Gradle plugin.
 ```
 
-**Cause:** Old KSP id tied to Kotlin 2.1.20 is no longer published the same way.  
-**Fix:** Use KSP **2.3.11** (KSP2 — version independent of Kotlin string).
+**Fix:** Remove from `gradle.properties`. Enable BuildConfig only in module DSL:
 
-## Current stack
-
-| Item | Version |
-|------|---------|
-| AGP | 9.4.1 |
-| Gradle | 9.6.1 |
-| Kotlin | 2.4.20 |
-| KSP | 2.3.11 |
-| compileSdk | 36 |
-
-## Build time optimizations (`gradle.properties`)
-
-- `org.gradle.parallel=true`
-- `org.gradle.caching=true`
-- `org.gradle.configuration-cache=true`
-- `org.gradle.configureondemand=true`
-- Kotlin incremental + in-process compiler
-- JVM heap 4G
-
-## After pull
-
-```bash
-./gradlew --stop
-./gradlew assembleDebug --configuration-cache
+```kotlin
+android {
+    buildFeatures {
+        buildConfig = true
+    }
+}
 ```
 
-Push **all** of `build.gradle.kts`, `app/build.gradle.kts`, `settings.gradle.kts`, `gradle.properties`, and wrapper to GitHub so Actions no longer resolves the old KSP version.
+## Also fixed earlier
+
+- KSP → `2.3.11` (not `2.1.20-2.0.32`)
+- AGP 9.4.1 + Gradle 9.6.1 + Kotlin 2.4.20
