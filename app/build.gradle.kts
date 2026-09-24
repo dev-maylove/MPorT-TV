@@ -70,7 +70,7 @@ android {
 
 dependencies {
     val media3 = "1.11.1"
-    val room = "2.7.2"
+    val room = "2.8.5"
     val lifecycle = "2.9.4"
     val nav = "2.9.4"
 
