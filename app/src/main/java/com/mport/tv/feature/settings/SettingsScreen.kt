@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.mport.tv.MPorTApplication
+import com.mport.tv.data.playlist.BuiltInPlaylist
 import com.mport.tv.data.playlist.DemoPlaylist
 import com.mport.tv.data.playlist.M3UParser
 import com.mport.tv.data.playlist.PlaylistImporter
@@ -23,6 +24,7 @@ fun SettingsScreen(onBack: () -> Unit = {}) {
     val scope = rememberCoroutineScope()
 
     val savedUrl by settings.playlistUrl.collectAsState(initial = null)
+    val darkMode by settings.darkMode.collectAsState(initial = true)
     var urlInput by remember { mutableStateOf(savedUrl ?: "") }
     var status by remember { mutableStateOf<String?>(null) }
     var loading by remember { mutableStateOf(false) }
@@ -40,6 +42,18 @@ fun SettingsScreen(onBack: () -> Unit = {}) {
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         Text("Settings", style = MaterialTheme.typography.headlineMedium)
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text("Dark theme", style = MaterialTheme.typography.bodyLarge)
+            Switch(
+                checked = darkMode,
+                onCheckedChange = { v -> scope.launch { settings.setDarkMode(v) } }
+            )
+        }
+        HorizontalDivider()
+
 
         OutlinedTextField(
             value = urlInput,

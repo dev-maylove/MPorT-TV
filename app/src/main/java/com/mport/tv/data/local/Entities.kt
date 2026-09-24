@@ -12,7 +12,8 @@ data class ChannelEntity(
     val streamUrl: String,
     val streamType: String,
     val epgId: String?,
-    val isFavorite: Boolean
+    val isFavorite: Boolean,
+    val headersJson: String? = null
 )
 
 @Entity(tableName = "watch_history")

@@ -8,7 +8,9 @@ data class Channel(
     val streamUrl: String,
     val streamType: StreamType = StreamType.AUTO,
     val epgId: String? = null,
-    val isFavorite: Boolean = false
+    val isFavorite: Boolean = false,
+    /** HTTP headers for stream requests (Referer, User-Agent, Origin, …) */
+    val headers: Map<String, String> = emptyMap()
 )
 
 enum class StreamType { AUTO, HLS, DASH, MP4 }
