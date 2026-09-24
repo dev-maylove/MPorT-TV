@@ -1,0 +1,12 @@
+# Release Checklist
+- [ ] Replace example.invalid with an authorized HTTPS API.
+- [ ] Configure release signing through local/CI secrets.
+- [ ] Never commit .jks/.keystore/.p12/.pem or credentials.
+- [ ] Build assembleRelease.
+- [ ] Verify APK with Android apksigner.
+- [ ] Test Android 14+ install and upgrade.
+- [ ] Test authorized HLS/DASH/MP4/DRM streams.
+- [ ] Test playlist, XMLTV EPG, favorites, history, search and settings.
+- [ ] Verify update SHA-256/signature before installation.
+- [ ] Remove debug logging and test endpoints.
+- [ ] Review privacy policy and third-party licenses.

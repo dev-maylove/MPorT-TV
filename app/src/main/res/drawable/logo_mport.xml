@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="80dp"
+    android:viewportWidth="200"
+    android:viewportHeight="80">
+    <!-- Play icon -->
+    <path
+        android:fillColor="#4FC3F7"
+        android:pathData="M20,20 L20,60 L55,40 Z"/>
+    <!-- Text path approximation for MPorT -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M70,25 h8 v30 h-8 z M82,25 h8 l10,20 l10,-20 h8 v30 h-8 v-18 l-10,18 h-4 l-10,-18 v18 h-8 z"/>
+    <path
+        android:fillColor="#4FC3F7"
+        android:pathData="M140,25 h8 v22 h16 v8 h-24 z"/>
+</vector>

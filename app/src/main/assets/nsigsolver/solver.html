@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<script>
+  if (typeof globalThis === 'undefined') {
+    window.globalThis = window;
+  }
+  // Matikan fungsi navigasi agar WebView tidak pernah keluar dari solver.html
+  try {
+    if (window.location) {
+      window.location.assign = function() {};
+      window.location.replace = function() {};
+      window.location.reload = function() {};
+    }
+  } catch(e) {}
+  window.onbeforeunload = function() { return false; };
+</script>
+<script src="polyfill.js"></script>
+<script src="meriyah-6.1.4.min.js"></script>
+<script src="astring-1.9.0.min.js"></script>
+<script src="es5transform.js"></script>
+<script src="yt.solver.core.js"></script>
+<script>
+  function solveN(playerJsInput, nChallenge) {
+    try {
+      var playerJsContent = playerJsInput;
+      if (!playerJsContent && window.AndroidBridge && window.AndroidBridge.getPlayerJs) {
+        playerJsContent = window.AndroidBridge.getPlayerJs();
+      }
+      var input = {
+        type: 'player',
+        player: playerJsContent,
+        output_preprocessed: false, // Matikan alokasi 3.6MB preprocessed player agar RAM STB ZTE tetap aman & bebas OOM!
+        requests: [
+          {
+            type: 'n',
+            challenges: [nChallenge]
+          }
+        ]
+      };
+
+      var result = jsc(input);
+
+      if (result && result.responses && result.responses[0] && result.responses[0].data) {
+        var solved = result.responses[0].data[nChallenge];
+        if (solved) {
+          if (window.AndroidBridge && window.AndroidBridge.onSolved) {
+            window.AndroidBridge.onSolved(nChallenge, solved);
+          }
+          return solved;
+        }
+      }
+      var errStr = JSON.stringify(result);
+      if (window.AndroidBridge && window.AndroidBridge.onError) {
+        window.AndroidBridge.onError(errStr);
+      }
+      return null;
+    } catch(e) {
+      var msg = e.message || String(e);
+      if (window.AndroidBridge && window.AndroidBridge.onError) {
+        window.AndroidBridge.onError(msg);
+      }
+      return null;
+    }
+  }
+  window.solveN = solveN;
+</script>
+</head>
+<body></body>
+</html>

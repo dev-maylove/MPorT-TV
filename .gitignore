@@ -1,0 +1,10 @@
+*.jks
+*.keystore
+*.p12
+*.pem
+local.properties
+.env
+/build
+*/build
+.idea
+.DS_Store
