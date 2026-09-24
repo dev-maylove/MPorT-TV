@@ -23,3 +23,12 @@ Clean-room Android IPTV / media player + YouTube InnerTube with nsig/PO assets.
 ```
 
 Use only authorized content.
+
+
+## CI / Workflows
+
+See [`.github/workflows/`](.github/workflows/):
+
+- **CI** — build debug APK on push/PR
+- **PR Check** — compile + unit tests
+- **Release** — tag `v*` → release APK (+ optional signing secrets)
